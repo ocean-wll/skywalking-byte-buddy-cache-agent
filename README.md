@@ -46,10 +46,11 @@ skywalking底层是基于bytebuddy作为字节码增强框架，而bytebuddy在�
 如果需要关闭agent或使用file作为存储可以在添加启动参数
 
 ```shell
--javaagent:${jarPath}/skywalking-byte-buddy-cache-agent-1.0.0.jar=enable=true;cacheMode=file
+-DbyteBuddyCache.enable=false
+-DbyteBuddyCache.cacheMode=file
 ```
 
-多个启动参数之间用;进行分割
+目前cacheMode只支持 file 和 memory
 
 ---
 
