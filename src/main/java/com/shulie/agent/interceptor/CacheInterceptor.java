@@ -22,11 +22,8 @@ public class CacheInterceptor {
         Object returnObj = null;
 
         try {
-            // 调用原有方法
-            returnObj = callable.call();
             // 校验参数
             if (checkArgs(args)) {
-
                 ClassLoader classLoader = (ClassLoader) args[0];
                 String className = (String) args[1];
 
@@ -34,10 +31,15 @@ public class CacheInterceptor {
                 byte[] bytes = Cache.getClassCache(classLoader, className);
                 if (bytes != null) {
                     return bytes;
-                } else if (returnObj != null) {
+                }
+                // 调用原有方法
+                returnObj = callable.call();
+                if (returnObj != null) {
                     // 如果缓存中没有，并且原方法执行结果不为null，则放入缓存中
                     Cache.putClassCache(classLoader, className, (byte[]) returnObj);
                 }
+            } else {
+                returnObj = callable.call();
             }
             return returnObj;
         } catch (Exception e) {
