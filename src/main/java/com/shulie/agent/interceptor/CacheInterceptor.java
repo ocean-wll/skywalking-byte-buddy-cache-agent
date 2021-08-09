@@ -39,6 +39,7 @@ public class CacheInterceptor {
                     Cache.putClassCache(classLoader, className, (byte[]) returnObj);
                 }
             } else {
+                // 会出现classloader为null的情况，但还是需要去执行transform
                 returnObj = callable.call();
             }
             return returnObj;
