@@ -41,10 +41,9 @@ skywalking底层是基于bytebuddy作为字节码增强框架，而bytebuddy在�
 
    **ps:一定得添加在skywalking agent之前，不然不生效。**
 
-   默认是开启缓存，缓存类型是memory
 
+默认是开启缓存，缓存类型是memory
 如果需要关闭agent或使用file作为存储可以在添加启动参数
-
 ```shell
 -DbyteBuddyCache.enable=false
 -DbyteBuddyCache.cacheMode=file
@@ -60,10 +59,11 @@ skywalking底层是基于bytebuddy作为字节码增强框架，而bytebuddy在�
 2. 支持主动开启和关闭缓存。ps：但只在应用重启是才生效。
 3. 支持MEMORY和FILE两种缓存机制。
 
-<font color=red >注意：skywalking-byte-buddy-cache-agent得在skywalking前进行加载，不然还是不生效</font>
+---
+# 注意
+skywalking-byte-buddy-cache-agent得在skywalking前进行加载，不然还是不生效
 
 ---
-
 ## 最后
 
 作者水平有限，有问题欢迎指正！ღ( ´･ᴗ･` )比心
