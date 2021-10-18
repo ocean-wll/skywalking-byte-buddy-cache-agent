@@ -15,9 +15,8 @@ import java.lang.instrument.Instrumentation;
  */
 public class Agent {
 
-    public static void premain(final String agentArgs, final Instrumentation instrumentation) {
+    public static void premain(final String agentArgs, final Instrumentation instrumentation) throws Exception {
         System.err.println("====== skywalking-byte-buddy-agent ======");
-
         // 预处理启动参数
         AgentConfig.instance().initConfig();
 
@@ -26,7 +25,15 @@ public class Agent {
             System.out.println("=== cacheMode is " + AgentConfig.cacheMode + " ===");
             AgentBuilder.Transformer transformer = (builder, typeDescription, classLoader, javaModule) -> builder
                     // 拦截transform方法
-                    .method(ElementMatchers.hasMethodName("transform"))
+//                    .method(ElementMatchers.hasMethodName("transform"))
+                    .method(ElementMatchers.hasMethodName("transform")
+                                    .and(ElementMatchers.takesArguments(5))
+//                            .and(ElementMatchers.takesArgument(0,ClassLoader.class))
+//                            .and(ElementMatchers.takesArgument(1,String.class))
+//                            .and(ElementMatchers.takesArgument(2,Class.class))
+//                            .and(ElementMatchers.takesArgument(3,ProtectionDomain.class))
+//                            .and(ElementMatchers.takesArgument(4,byte[].class))
+                    )
                     // 委托
                     .intercept(MethodDelegation.to(CacheInterceptor.class));
 
